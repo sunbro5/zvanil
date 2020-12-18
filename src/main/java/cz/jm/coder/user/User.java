@@ -1,6 +1,7 @@
-package cz.jm.coder.model;
+package cz.jm.coder.user;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.validation.constraints.NotBlank;
 
@@ -8,7 +9,9 @@ import javax.validation.constraints.NotBlank;
 public class User {
 
     @NotBlank
+    @SafeHtml
     private String username;
     @NotBlank
+    @SafeHtml
     private String password;
 }

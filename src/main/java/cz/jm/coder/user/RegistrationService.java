@@ -1,8 +1,8 @@
-package cz.jm.coder.service;
+package cz.jm.coder.user;
 
 import cz.jm.coder.exception.DefaultException;
-import cz.jm.coder.model.User;
-import cz.jm.coder.repository.UserRepository;
+import cz.jm.coder.user.User;
+import cz.jm.coder.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class RegistrationService {
     public void registerNewUser(User user){
         Optional.of(userRepository.getUser(user.getUsername()))
                 .ifPresent(u -> {
-                    throw new DefaultException();//todo handle user already exists
+                    throw new DefaultException("User already registered");//todo handle user already exists
                 });
         userRepository.addUser(user);
     }

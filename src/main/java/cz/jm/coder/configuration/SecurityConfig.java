@@ -1,8 +1,8 @@
 package cz.jm.coder.configuration;
 
-import cz.jm.coder.MySavedRequestAwareAuthenticationSuccessHandler;
-import cz.jm.coder.RestAuthenticationEntryPoint;
-import cz.jm.coder.service.CustomAuthenticationProvider;
+import cz.jm.coder.security.MySavedRequestAwareAuthenticationSuccessHandler;
+import cz.jm.coder.security.RestAuthenticationEntryPoint;
+import cz.jm.coder.security.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

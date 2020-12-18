@@ -1,0 +1,28 @@
+package cz.jm.coder.chat;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+
+@Controller
+@RequestMapping("/api/post")
+public class ChatController {
+
+    @Autowired
+    private ChatService chatService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public void addChatMessage(@Valid @RequestBody ChatMessage message) {
+        chatService.addChatMessage(message);
+    }
+
+    @GetMapping
+    public List<ChatMessage> getUserChat(@RequestParam String withUsername) {
+        return chatService.getUserChat(withUsername);
+    }
+}

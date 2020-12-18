@@ -1,6 +1,6 @@
-package cz.jm.coder.repository;
+package cz.jm.coder.user;
 
-import cz.jm.coder.model.User;
+import cz.jm.coder.user.User;
 
 public interface UserRepository {
 

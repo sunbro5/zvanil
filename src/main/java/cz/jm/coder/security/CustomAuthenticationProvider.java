@@ -1,7 +1,7 @@
-package cz.jm.coder.service;
+package cz.jm.coder.security;
 
-import cz.jm.coder.model.User;
-import cz.jm.coder.repository.UserRepository;
+import cz.jm.coder.user.User;
+import cz.jm.coder.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,7 +35,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     private boolean isAuthenticated(String username, String password) {
         User user = userRepository.getUser(username);
-        return user.getPassword().equals(password);
+        return user != null && user.getPassword().equals(password);
     }
 
     @Override

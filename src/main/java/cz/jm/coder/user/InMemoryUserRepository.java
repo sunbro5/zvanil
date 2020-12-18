@@ -1,15 +1,16 @@
-package cz.jm.coder.repository;
+package cz.jm.coder.user;
 
-import cz.jm.coder.model.User;
+import cz.jm.coder.user.User;
+import cz.jm.coder.user.UserRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
-public class InMemoryUserRepository implements UserRepository{
+public class InMemoryUserRepository implements UserRepository {
 
-    private volatile Map<String, User> users = new ConcurrentHashMap<>();
+    private Map<String, User> users = new ConcurrentHashMap<>();
 
 
     @Override
