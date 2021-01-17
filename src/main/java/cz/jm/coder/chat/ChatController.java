@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-@Controller
-@RequestMapping("/api/post")
+@RestController
+@RequestMapping("/api/chat")
 public class ChatController {
 
     @Autowired

@@ -14,19 +14,19 @@ public class ChatService {
     private LoggedUserFacade userFacade;
 
     @Autowired
-    private ChatRepository postRepository;
+    private ChatRepository chatRepository;
 
     public void addChatMessage(ChatMessage message) {
         if (!message.getUserName().equals(userFacade.getUserUsername())) {
             throw new UnauthorizedOperationException("Message user is not same as logged user");
         }
         ChatHelper.populateKeyUsername(message);
-        postRepository.addChatMessage(message);
+        chatRepository.addChatMessage(message);
     }
 
 
     public List<ChatMessage> getUserChat(String withUsername) {
         var username = userFacade.getUserUsername();
-        return postRepository.getChatMessagesWithUser(username, withUsername);
+        return chatRepository.getChatMessagesWithUser(username, withUsername);
     }
 }

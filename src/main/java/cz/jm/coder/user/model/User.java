@@ -1,17 +1,20 @@
-package cz.jm.coder.user;
+package cz.jm.coder.user.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import org.hibernate.validator.constraints.SafeHtml;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @NotBlank
-    @SafeHtml
     private String username;
     @NotBlank
-    @SafeHtml
     private String password;
 }

@@ -1,7 +1,6 @@
 package cz.jm.coder.user;
 
-import cz.jm.coder.user.User;
-import cz.jm.coder.user.UserRepository;
+import cz.jm.coder.user.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;

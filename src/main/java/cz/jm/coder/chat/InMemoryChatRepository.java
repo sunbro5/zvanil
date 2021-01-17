@@ -16,8 +16,9 @@ public class InMemoryChatRepository implements ChatRepository {
         var messageList = chatMessages.get(message.getKey());
         if (messageList == null) {
             chatMessages.put(ChatHelper.getChatKey(message), List.of(message));
+        } else {
+            messageList.add(message);
         }
-        messageList.add(message);
     }
 
     @Override

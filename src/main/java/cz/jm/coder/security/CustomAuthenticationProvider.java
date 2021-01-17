@@ -1,6 +1,6 @@
 package cz.jm.coder.security;
 
-import cz.jm.coder.user.User;
+import cz.jm.coder.user.model.User;
 import cz.jm.coder.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
