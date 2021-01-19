@@ -10,7 +10,7 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      secretMessage: `Cici je nej tolikrat: `,
+      secretMessage: `WTFCici je nej tolikratbbvcbcv: `,
       counter: 0,
       msg: 'Welcome to Your Vue.js App'
     }

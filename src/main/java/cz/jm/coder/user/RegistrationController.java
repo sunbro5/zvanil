@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/register")
+@RequestMapping("/api/registration")
 public class RegistrationController {
 
     @Autowired

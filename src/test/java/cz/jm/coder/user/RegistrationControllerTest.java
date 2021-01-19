@@ -16,7 +16,7 @@ public class RegistrationControllerTest extends AbstractIntegrationTest {
                 .username("testUser")
                 .password("test")
                 .build();
-        successfulCall(post("/api/register")
+        successfulCall(post("/api/registration")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectToJson(user)));
         successfulCall(post("/login_process")
