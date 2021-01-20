@@ -16,7 +16,7 @@
       />
       <button>Prihlaš se</button>
     </form>
-    <router-link :to="{ name: 'Registration'}">Registruj se!</router-link>
+    <router-link :to="{ name: 'Registration' }">Registruj se!</router-link>
   </div>
 </template>
 
@@ -36,17 +36,21 @@ export default {
   },
   methods: {
     login() {
+      const form = new FormData();
+      form.append("username", this.form.username);
+      form.append("password", this.form.password);
+      const headers = {
+        "Content-Type": 'multipart/form-data',
+      };
       axios
-        .post("http://localhost:8080/login_process", this.form)
+        .post("http://localhost:8080/login_process", form, { headers: headers })
         .then((res) => {
           console.log("prihlasen");
           if (res.status == 200) {
           }
         });
     },
-    redirectToRegistration() {
-
-    }
+    redirectToRegistration() {},
   },
 };
 </script>
