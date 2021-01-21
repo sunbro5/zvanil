@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div class="main">
     <h2>Prihlášení</h2>
@@ -47,6 +48,7 @@ export default {
         .then((res) => {
           console.log("prihlasen");
           if (res.status == 200) {
+            this.$router.push({ name: 'Chat' })
           }
         });
     },

@@ -1,5 +1,6 @@
+/* eslint-disable */
 <template>
-  <div class="main">
+  <div class="registration">
     <h2>Registrace</h2>
     <form v-on:submit.prevent="submitRegistraion">
       <input
@@ -27,24 +28,24 @@ export default {
   data() {
     return {
       form: {
-        username: "",
-        password: "",
-      },
-    };
+        username: '',
+        password: ''
+      }
+    }
   },
   methods: {
     submitRegistraion() {
       axios
-        .post("http://localhost:8080/api/registration", this.form)
+        .post('http://localhost:8080/api/registration', this.form)
         .then((res) => {
-          console.log("registered");
-          if (res.status == 200) {
+          console.log('registered')
+          if (res.status === 200) {
             this.$router.push({ name: 'Main' })
           }
-        });
-    },
-  },
-};
+        })
+    }
+  }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

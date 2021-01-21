@@ -24,6 +24,9 @@ public class RegistrationService {
 
     public UserInfo getUser(String userName){
         var user = userRepository.getUser(userName);
+        if(user == null){
+            throw new DefaultException("Dopl 404");
+        }
         return new UserInfo(user.getUsername());
     }
 }
