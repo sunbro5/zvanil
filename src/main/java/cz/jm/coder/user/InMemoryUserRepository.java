@@ -3,6 +3,8 @@ package cz.jm.coder.user;
 import cz.jm.coder.user.model.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,5 +22,10 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public User getUser(String username) {
         return users.get(username);
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return new ArrayList<>(users.values());
     }
 }

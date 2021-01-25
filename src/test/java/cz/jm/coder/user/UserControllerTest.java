@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -28,4 +30,23 @@ public class UserControllerTest extends AbstractIntegrationTest {
         assertEquals("anotherUser", userInfo.getUsername());
     }
 
+    @Test
+    @WithMockUser(username = "spring")
+    public void getAllUserEmpty() throws Exception {
+        List<UserInfo> userInfos = successfulCallForListObject(get("/api/user/all"), UserInfo.class);
+        assertTrue(userInfos.isEmpty());
+    }
+
+    @Test
+    @WithMockUser(username = "spring")
+    public void getAllUser() throws Exception {
+        User user = new User().builder()
+                .username("anotherUser")
+                .password("test")
+                .build();
+        doReturn(Collections.singletonList(user)).when(userRepository).getAllUser();
+        List<UserInfo> userInfos = successfulCallForListObject(get("/api/user/all"), UserInfo.class);
+        assertFalse(userInfos.isEmpty());
+        assertEquals("anotherUser", userInfos.get(0).getUsername());
+    }
 }

@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RegistrationService {
@@ -36,5 +38,11 @@ public class RegistrationService {
             throw new ResourceNotFoundException("Uzivatel neexistuje");
         }
         return new UserInfo(user.getUsername());
+    }
+
+    public List<UserInfo> getAllUsers(){
+        return userRepository.getAllUser().stream()
+                .map( user -> new UserInfo(user.getUsername()))
+                .collect(Collectors.toList());
     }
 }
