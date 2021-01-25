@@ -1,5 +1,7 @@
 package cz.jm.coder.user;
 
+import cz.jm.coder.security.service.LoggedUserFacade;
+import cz.jm.coder.security.service.RegistrationService;
 import cz.jm.coder.user.model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

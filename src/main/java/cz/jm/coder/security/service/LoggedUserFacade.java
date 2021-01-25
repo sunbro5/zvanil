@@ -1,4 +1,4 @@
-package cz.jm.coder.user;
+package cz.jm.coder.security.service;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;

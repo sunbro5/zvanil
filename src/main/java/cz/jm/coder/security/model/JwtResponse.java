@@ -1,18 +1,14 @@
-package cz.jm.coder.user.model;
+package cz.jm.coder.security.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class JwtResponse {
 
+    private String token;
     private String username;
-    private String password;
 }

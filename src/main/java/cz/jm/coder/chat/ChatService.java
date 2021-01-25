@@ -1,7 +1,6 @@
 package cz.jm.coder.chat;
 
-import cz.jm.coder.exception.UnauthorizedOperationException;
-import cz.jm.coder.user.LoggedUserFacade;
+import cz.jm.coder.security.service.LoggedUserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +16,7 @@ public class ChatService {
     private ChatRepository chatRepository;
 
     public void addChatMessage(ChatMessage message) {
-        if (!message.getUserName().equals(userFacade.getUserUsername())) {
-            throw new UnauthorizedOperationException("Message user is not same as logged user");
-        }
+        message.setUserName(userFacade.getUserUsername());
         ChatHelper.populateKeyUsername(message);
         chatRepository.addChatMessage(message);
     }

@@ -1,18 +1,20 @@
-package cz.jm.coder.user.model;
+package cz.jm.coder.security.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+@Builder
+public class UserLoginRequest {
 
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String password;
 }

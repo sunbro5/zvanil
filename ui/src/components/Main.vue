@@ -1,28 +1,28 @@
-/* eslint-disable */
 <template>
   <div class="main">
-    <h2>Prihlášení</h2>
+    <h2>Přihlášení do Žvanila</h2>
     <form v-on:submit.prevent="login">
       <input
         type="text"
         id="username"
-        placeholder="Jmeno"
+        placeholder="Jak na tebe hulákaj"
         v-model="form.username"
       />
       <input
         type="text"
         id="password"
-        placeholder="Heslo"
+        placeholder="Tady napiš heslo"
         v-model="form.password"
       />
-      <button>Prihlaš se</button>
+      <button>Tak hurá do kecání</button>
     </form>
-    <router-link :to="{ name: 'Registration' }">Registruj se!</router-link>
+    <router-link :to="{ name: 'Registration' }">Když nevíš klikni sem</router-link>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import AuthService from '../service/AuthService';
 
 export default {
   name: "Main",
@@ -37,20 +37,11 @@ export default {
   },
   methods: {
     login() {
-      const form = new FormData();
-      form.append("username", this.form.username);
-      form.append("password", this.form.password);
-      const headers = {
-        "Content-Type": 'multipart/form-data',
-      };
-      axios
-        .post("http://localhost:8080/login_process", form, { headers: headers })
-        .then((res) => {
-          console.log("prihlasen");
-          if (res.status == 200) {
-            this.$router.push({ name: 'Chat' })
-          }
-        });
+      AuthService.login(this.form).then(user => {
+        if(user.token){
+          this.$router.push({ name: 'Chat' })
+        }
+      })
     },
     redirectToRegistration() {},
   },
@@ -59,19 +50,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.main{
+    width: 50%;
+    margin: auto;
+    text-align: center;
+  }
+  .main form{
+    padding: 20px 20px;
+  }
+  .main input{
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  ::-webkit-input-placeholder {
+   text-align: center;
 }
 </style>

@@ -1,5 +1,7 @@
-package cz.jm.coder.user;
+package cz.jm.coder.security;
 
+import cz.jm.coder.security.model.UserRegistrationRequest;
+import cz.jm.coder.security.service.RegistrationService;
 import cz.jm.coder.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +18,7 @@ public class RegistrationController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public void register(@Valid @RequestBody User user){
-        registrationService.registerNewUser(user);
+    public void register(@Valid @RequestBody UserRegistrationRequest registrationRequest){
+        registrationService.registerNewUser(registrationRequest);
     }
 }

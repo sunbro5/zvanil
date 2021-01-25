@@ -2,6 +2,7 @@ package cz.jm.coder.chat;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,7 +16,9 @@ public class InMemoryChatRepository implements ChatRepository {
     public void addChatMessage(ChatMessage message) {
         var messageList = chatMessages.get(message.getKey());
         if (messageList == null) {
-            chatMessages.put(ChatHelper.getChatKey(message), List.of(message));
+            List<ChatMessage> chatMessageList = new ArrayList<>();
+            chatMessageList.add(message);
+            chatMessages.put(ChatHelper.getChatKey(message), chatMessageList);
         } else {
             messageList.add(message);
         }

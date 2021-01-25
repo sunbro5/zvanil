@@ -17,21 +17,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 public class UserControllerTest extends AbstractIntegrationTest {
 
     @Test
-    public void getUserInfo() throws Exception {
-        User user = new User().builder()
-                .username("testUser")
-                .password("test")
-                .build();
-        doReturn(user).when(userRepository).getUser("testUser");
-
-        successfulCall(post("/login_process")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("username", "testUser")
-                .param("password", "test")
-        );
-    }
-
-    @Test
     @WithMockUser(username = "spring")
     public void getUser() throws Exception {
         User user = new User().builder()

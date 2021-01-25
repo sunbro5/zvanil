@@ -14,7 +14,6 @@ import javax.validation.constraints.NotEmpty;
 public class ChatMessage {
 
     private String key;
-    @NotEmpty
     private String userName;
     @NotEmpty
     private String toUserName;
