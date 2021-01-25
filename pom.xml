@@ -10,7 +10,7 @@
     </parent>
     <groupId>cz.jm</groupId>
     <artifactId>coder</artifactId>
-    <version>0.1</version>
+    <version>1.0</version>
     <name>coder</name>
     <description>Demo project for Spring Boot</description>
 
