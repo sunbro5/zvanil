@@ -11,9 +11,11 @@
         <span v-else class="left">{{ message.userName }} : {{ message.message }}</span>
       </div>
     </div>
-    <div v-if="toUserName != null">
+    <div v-on:submit.prevent="sendMessage" v-if="toUserName != null">
+      <form v-on:keyup.enter="sendMessage">
       <input v-model="newMessage" type="text" placeholder="" />
-      <button v-on:click="sendMessage">Odeslat žvanění</button>
+      <button>Odeslat žvanění</button>
+      </form>
     </div>
   </div>
 </template>
@@ -22,6 +24,7 @@
 import axios from "axios";
 import UserSelector from "./UserSelector";
 import authHeader from "../service/DataService";
+import URLS from '../constants/urls'
 
 export default {
   name: "Chat",
@@ -45,7 +48,7 @@ export default {
     },
     loadChatList() {
       axios
-        .get("/api/chat?withUsername=" + this.toUserName, {
+        .get(URLS.API_CHAT + "?withUsername=" + this.toUserName, {
           headers: authHeader(),
         })
         .then((res) => {
@@ -61,12 +64,13 @@ export default {
           message: this.newMessage,
         };
         axios
-          .post("/api/chat", postData, {
+          .post(URLS.API_CHAT, postData, {
             headers: authHeader(),
           })
           .then((res) => {
             if (res.status === 200) {
               console.log("sended");
+              this.newMessage = "";
               loadChatList();
             }
           });

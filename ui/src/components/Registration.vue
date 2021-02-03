@@ -22,6 +22,7 @@
 
 <script>
 import axios from "axios";
+import URLS from '../constants/urls';
 
 export default {
   name: "Registration",
@@ -36,7 +37,7 @@ export default {
   methods: {
     submitRegistraion() {
       axios
-        .post('/api/registration', this.form)
+        .post(URLS.API_REGISTRATION, this.form)
         .then((res) => {
           if (res.status === 200) {
             this.$router.push({ name: 'Main' })
