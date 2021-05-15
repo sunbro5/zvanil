@@ -5,4 +5,4 @@ docker run --name coder-postgres -p 5432:5432  -e POSTGRES_PASSWORD=pass -d post
 
 RUNAPP
 
-env DB_URL=jdbc:postgresql://192.168.0.107:5432/postgres,DB_USERNAME=postgres,DB_PASSWORD=pass
+env DATABASE_URL=jdbc:postgresql://192.168.0.107:5432/postgres,PGUSER=postgres,PGPASSWORD=pass
