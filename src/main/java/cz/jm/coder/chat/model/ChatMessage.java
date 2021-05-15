@@ -1,4 +1,4 @@
-package cz.jm.coder.chat;
+package cz.jm.coder.chat.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

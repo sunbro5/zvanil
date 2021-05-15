@@ -1,8 +1,8 @@
 package cz.jm.coder.security;
 
 import cz.jm.coder.security.model.UserLoginAuth;
-import cz.jm.coder.security.service.UserLoginService;
 import cz.jm.coder.security.utils.JwtUtils;
+import cz.jm.coder.user.service.UserLoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

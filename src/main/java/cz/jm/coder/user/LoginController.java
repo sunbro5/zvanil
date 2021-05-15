@@ -1,10 +1,10 @@
-package cz.jm.coder.security;
+package cz.jm.coder.user;
 
 import cz.jm.coder.security.model.JwtResponse;
 import cz.jm.coder.security.model.UserLoginAuth;
 import cz.jm.coder.security.model.UserLoginRequest;
 import cz.jm.coder.security.utils.JwtUtils;
-import cz.jm.coder.user.UserRepository;
+import cz.jm.coder.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,5 +1,7 @@
 package cz.jm.coder.chat;
 
+import cz.jm.coder.chat.model.ChatHelper;
+import cz.jm.coder.chat.model.ChatMessage;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

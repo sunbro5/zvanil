@@ -2,19 +2,25 @@ package cz.jm.coder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.jm.coder.chat.ChatRepository;
-import cz.jm.coder.security.service.LoggedUserFacade;
-import cz.jm.coder.user.UserRepository;
+import cz.jm.coder.chat.repository.ChatRepository;
+import cz.jm.coder.security.LoggedUserFacade;
+import cz.jm.coder.user.repository.UserRepository;
+import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.boot.test.util.TestPropertyValues;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,7 +28,11 @@ import java.util.List;
 @SpringBootTest
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
+@ContextConfiguration
 public abstract class AbstractIntegrationTest {
+
+    @ClassRule
+    public static PostgreSQLContainer postgreSQLContainer = PostgressContainer.getInstance();
 
     @Autowired
     protected MockMvc mockMvc;
@@ -30,13 +40,23 @@ public abstract class AbstractIntegrationTest {
     @SpyBean
     protected LoggedUserFacade userFacade;
 
-    @SpyBean
+    @Autowired
     protected UserRepository userRepository;
 
-    @SpyBean
+    @Autowired
     protected ChatRepository chatRepository;
 
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+        public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+            TestPropertyValues.of(
+                    "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
+                    "spring.datasource.username=" + postgreSQLContainer.getUsername(),
+                    "spring.datasource.password=" + postgreSQLContainer.getPassword()
+            ).applyTo(configurableApplicationContext.getEnvironment());
+        }
+    }
 
     protected <T> List<T> successfulCallForListObject(RequestBuilder requestBuilder, Class<T> object) throws Exception {
         return jsonToListObject(

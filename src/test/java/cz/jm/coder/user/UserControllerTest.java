@@ -3,6 +3,8 @@ package cz.jm.coder.user;
 import cz.jm.coder.AbstractIntegrationTest;
 import cz.jm.coder.user.model.User;
 import cz.jm.coder.user.model.UserInfo;
+import cz.jm.coder.user.repository.UserPersisted;
+import org.junit.After;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -18,16 +20,23 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 public class UserControllerTest extends AbstractIntegrationTest {
 
+    private static String TEST_USER = "anotherUser";
+
+    @After
+    public void after(){
+        userRepository.deleteAll();
+    }
+
     @Test
     @WithMockUser(username = "spring")
     public void getUser() throws Exception {
-        User user = new User().builder()
-                .username("anotherUser")
+        UserPersisted user = UserPersisted.builder()
+                .username(TEST_USER)
                 .password("test")
                 .build();
-        doReturn(user).when(userRepository).getUser("anotherUser");
-        UserInfo userInfo = successfulCallForObject(get("/api/user/anotherUser"), UserInfo.class);
-        assertEquals("anotherUser", userInfo.getUsername());
+        userRepository.save(user);
+        UserInfo userInfo = successfulCallForObject(get("/api/user/" + TEST_USER), UserInfo.class);
+        assertEquals(TEST_USER, userInfo.getUsername());
     }
 
     @Test
@@ -40,13 +49,13 @@ public class UserControllerTest extends AbstractIntegrationTest {
     @Test
     @WithMockUser(username = "spring")
     public void getAllUser() throws Exception {
-        User user = new User().builder()
-                .username("anotherUser")
+        UserPersisted user = UserPersisted.builder()
+                .username(TEST_USER)
                 .password("test")
                 .build();
-        doReturn(Collections.singletonList(user)).when(userRepository).getAllUser();
+        userRepository.save(user);
         List<UserInfo> userInfos = successfulCallForListObject(get("/api/user/all"), UserInfo.class);
         assertFalse(userInfos.isEmpty());
-        assertEquals("anotherUser", userInfos.get(0).getUsername());
+        assertEquals(TEST_USER, userInfos.get(0).getUsername());
     }
 }

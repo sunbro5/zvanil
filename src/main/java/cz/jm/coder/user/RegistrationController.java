@@ -1,8 +1,7 @@
-package cz.jm.coder.security;
+package cz.jm.coder.user;
 
 import cz.jm.coder.security.model.UserRegistrationRequest;
-import cz.jm.coder.security.service.RegistrationService;
-import cz.jm.coder.user.model.User;
+import cz.jm.coder.user.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
