@@ -13,7 +13,7 @@
     </div>
     <div v-on:submit.prevent="sendMessage" v-if="toUserName != null">
       <form v-on:keyup.enter="sendMessage">
-      <input v-model="newMessage" type="text" placeholder="" />
+      <textarea v-model="newMessage" type="text" placeholder="" />
       <button>Odeslat žvanění</button>
       </form>
     </div>
@@ -89,7 +89,7 @@ export default {
 .chat form {
   padding: 20px 20px;
 }
-.chat input {
+.chat textarea {
   margin-bottom: 20px;
   width: 100%;
 }

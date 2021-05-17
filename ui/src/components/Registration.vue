@@ -2,18 +2,22 @@
   <div class="registration">
     <h2>Nějaká registrace</h2>
     <form v-on:submit.prevent="submitRegistraion">
+      <div>
       <input
         type="text"
         id="username"
         placeholder="Jak na tebe hulákaj"
         v-model="form.username"
       />
+      </div>
+      <div>
       <input
         type="text"
         id="password"
         placeholder="Doplň Heslo nebo 123"
         v-model="form.password"
       />
+      </div>
       <button>Upiš se!</button>
     </form>
     <router-link :to="{ name: 'Main' }">Ale tady jsem už byl.</router-link>
@@ -61,6 +65,7 @@ export default {
   .registration input{
     margin-bottom: 20px;
     width: 100%;
+    max-width: 200px;
   }
   ::-webkit-input-placeholder {
    text-align: center;

@@ -5,7 +5,6 @@ import cz.jm.coder.chat.model.ChatMessage;
 import cz.jm.coder.chat.repository.ChatRepository;
 import cz.jm.coder.security.LoggedUserFacade;
 import cz.jm.coder.chat.websocket.WebSocketChatPusher;
-import cz.jm.coder.security.service.LoggedUserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -2,18 +2,22 @@
   <div class="main">
     <h2>Přihlášení do Žvanila</h2>
     <form v-on:submit.prevent="login">
+      <div>
       <input
         type="text"
         id="username"
         placeholder="Jak na tebe hulákaj"
         v-model="form.username"
       />
+      </div>
+      <div>
       <input
         type="text"
         id="password"
         placeholder="Tady napiš heslo"
         v-model="form.password"
       />
+      </div>
       <button>Tak hurá do kecání</button>
     </form>
     <router-link :to="{ name: 'Registration' }">Když nevíš klikni sem</router-link>
@@ -61,6 +65,7 @@ export default {
   .main input{
     margin-bottom: 20px;
     width: 100%;
+    max-width: 200px;
   }
   ::-webkit-input-placeholder {
    text-align: center;

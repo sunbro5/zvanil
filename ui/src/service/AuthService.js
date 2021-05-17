@@ -10,14 +10,20 @@ class AuthService {
       })
       .then(response => {
         if (response.data.token) {
-          localStorage.setItem('user', JSON.stringify(response.data));
+          localStorage.setItem('userAuth', JSON.stringify(response.data));
+          localStorage.setItem('username', response.data.username);
         }
         return response.data;
       });
   }
 
   logout() {
-    localStorage.removeItem('user');
+    localStorage.removeItem('userAuth');
+    localStorage.removeItem('username');
+  }
+
+  userName(){
+    return localStorage.getItem('username');
   }
 }
 

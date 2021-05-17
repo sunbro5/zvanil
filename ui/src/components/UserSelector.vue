@@ -1,14 +1,22 @@
 <template>
   <div class="userSelector">
-    <input
-      v-model="toUserName"
-      type="text"
-      :placeholder="userSelectorText"
-      @change="toUserNameChanged"
-    />
+    <div>
+      <input
+        v-model="toUserName"
+        type="text"
+        :placeholder="userSelectorText"
+        @change="toUserNameChanged"
+      />
+    </div>
     <div class="userList">
       <h3>Seznam Žvanilů</h3>
-      <a href="" v-for="user in userList" :key="user.username" v-on:click.prevent="toUserNamePicked(user.username)" >{{ user.username }}</a>
+      <a
+        href=""
+        v-for="user in userList"
+        :key="user.username"
+        v-on:click.prevent="toUserNamePicked(user.username)"
+        >{{ user.username }}</a
+      >
     </div>
   </div>
 </template>
@@ -17,6 +25,7 @@
 import axios from "axios";
 import authHeader from "../service/DataService";
 import URLS from "../constants/urls";
+import AuthService from '../service/AuthService';
 
 export default {
   name: "UserSelector",
@@ -54,7 +63,7 @@ export default {
         })
         .then((res) => {
           if (res.status === 200) {
-            this.userList = res.data;
+            this.userList = this.filterLoggedUsername(res.data);
           }
         });
     },
@@ -62,6 +71,13 @@ export default {
       if (toUsername) {
         this.$emit("changed", toUsername);
       }
+    },
+    filterLoggedUsername(loadedUserList) {
+      var userName = AuthService.userName();
+      if (!userName){
+        return loadedUserList;
+      }
+      return loadedUserList.filter(user => user.username !== userName);
     },
   },
   mounted() {
@@ -74,6 +90,7 @@ export default {
 .userSelector input {
   margin-bottom: 20px;
   width: 100%;
+  max-width: 200px;
 }
 .userList a {
   display: block;
