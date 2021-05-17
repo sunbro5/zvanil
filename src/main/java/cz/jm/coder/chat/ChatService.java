@@ -4,6 +4,8 @@ import cz.jm.coder.chat.model.ChatHelper;
 import cz.jm.coder.chat.model.ChatMessage;
 import cz.jm.coder.chat.repository.ChatRepository;
 import cz.jm.coder.security.LoggedUserFacade;
+import cz.jm.coder.chat.websocket.WebSocketChatPusher;
+import cz.jm.coder.security.service.LoggedUserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +24,14 @@ public class ChatService {
     @Autowired
     private ChatMessageMapper chatMessageMapper;
 
+    @Autowired
+    private WebSocketChatPusher webSocketChatPusher;
+
     public void addChatMessage(ChatMessage message) {
         message.setUserName(userFacade.getUserUsername());
         ChatHelper.populateKeyUsername(message);
         chatRepository.save(chatMessageMapper.chatMessageToChatMessagePersisted(message));
+        webSocketChatPusher.chatMessageAdded(message);
     }
 
 
