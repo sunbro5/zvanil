@@ -36,7 +36,7 @@ public class ChatControllerTest extends AbstractIntegrationTest {
                 .content(objectToJson(chatMessage))
                 .contentType(MediaType.APPLICATION_JSON)
         );
-        Optional<ChatMessagePersisted> chatMessagePersisted = chatRepository.getChatMessagesWithUser("test","toTest").stream()
+        Optional<ChatMessagePersisted> chatMessagePersisted = chatRepository.getChatMessagesByKey(ChatHelper.getChatKey("test","toTest")).stream()
                 .findFirst();
         assertTrue(chatMessagePersisted.isPresent());
         assertEquals("testMessage", chatMessagePersisted.get().getMessage());

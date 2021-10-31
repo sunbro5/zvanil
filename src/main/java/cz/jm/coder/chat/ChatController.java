@@ -21,8 +21,14 @@ public class ChatController {
         chatService.addChatMessage(message);
     }
 
+    @GetMapping("/{id}")
+    public ChatMessage getMessage(@PathVariable int id) {
+        return chatService.getChatById(id);
+    }
+
     @GetMapping
     public List<ChatMessage> getUserChat(@RequestParam String withUsername) {
         return chatService.getUserChat(withUsername);
     }
+
 }

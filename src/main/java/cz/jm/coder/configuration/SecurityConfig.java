@@ -53,6 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
+                .antMatchers("/ws/**").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/static/**").permitAll()
                 .antMatchers("/api/auth").permitAll()

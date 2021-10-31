@@ -9,6 +9,6 @@ public class ChatMessageWS {
 
     String userName;
     String toUserName;
-    String message;
+    int messageId;
     ChatMessageEventType type;
 }

@@ -1,6 +1,6 @@
 package cz.jm.coder.chat.websocket;
 
-import cz.jm.coder.chat.model.ChatMessage;
+import cz.jm.coder.chat.repository.ChatMessagePersisted;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -11,14 +11,14 @@ public class WebSocketChatPusher {
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 
-    public void chatMessageAdded(ChatMessage message){
+    public void chatMessageAdded(ChatMessagePersisted message) {
         ChatMessageWS messageWS = ChatMessageWS.builder()
-                .message(message.getUserName())
                 .toUserName(message.getToUserName())
                 .userName(message.getUserName())
+                .messageId(message.getId())
                 .type(ChatMessageEventType.ADDED)
                 .build();
-        simpMessagingTemplate.convertAndSendToUser(message.getToUserName(), "/topic/chat", messageWS);
+        simpMessagingTemplate.convertAndSend("/topic/chat/" + message.getKey(), messageWS);
     }
 
 

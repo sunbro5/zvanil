@@ -1,6 +1,6 @@
 const PROD_URL = ""
 const LOCAL_URL = "http://localhost:8081"
-const URL = PROD_URL
+const URL = LOCAL_URL
 const API_USER = URL + "/api/user/"
 const API_CHAT = URL + "/api/chat"
 const API_REGISTRATION = URL + "/api/registration"
