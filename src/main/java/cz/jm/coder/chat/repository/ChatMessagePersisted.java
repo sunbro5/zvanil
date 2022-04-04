@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -23,6 +20,8 @@ public class ChatMessagePersisted {
     private String key;
     private String userName;
     private String toUserName;
+    //@Lob
+    @Column(columnDefinition="TEXT")
     private String message;
 
 }

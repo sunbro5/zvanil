@@ -1,34 +1,64 @@
 <template>
-  <div class="chat">
-    <h2 v-if="toUserName != null">Žvanění s {{ toUserName }}</h2>
-    <h2 v-else>Žvanění</h2>
-    <UserSelector v-if="toUserName == null" @changed="toUserNameFilled" />
-    <div class="chatlist" v-if="chatList && chatList.length">
-      <div v-for="(message, index) in chatList" :key="`message-${index}`">
-        <span v-if="message.userName == toUserName" class="right"
-          >{{ message.userName }}: {{ message.message }}</span
-        >
-        <span v-else class="left">{{ message.userName }} : {{ message.message }}</span>
+  <div class="container">
+    <div class="row clearfix">
+      <div class="col-lg-12">
+        <div class="card chat-app">
+          <ChatUsers @changed="toUserNameFilled" />
+          <div class="chat">
+            <div class="chat-header clearfix">
+              <div class="row">
+                <div class="col-lg-6">
+                  <a
+                    href="javascript:void(0);"
+                    data-toggle="modal"
+                    data-target="#view_info"
+                  >
+                    <img
+                      src="@/assets/avatar.png"
+                      alt="avatar"
+                    />
+                  </a>
+                  <div v-if="toUserName != null" class="chat-about">
+                    <h6 class="m-b-0">{{ toUserName }}</h6>
+                    <small style="display:none">Last seen: 2 hours ago</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ChatList :chatList="chatList" :toUsername="toUsername" />
+            <div class="chat-message clearfix">
+              <div class="input-group mb-0">
+                <div class="input-group-prepend">
+                  <span v-on:click="sendMessage" class="input-group-text"
+                    ><i class="fa fa-send"></i
+                  ></span>
+                </div>
+                <input
+                  v-on:keyup.enter="sendMessage"
+                  v-model="newMessage"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter text here..."
+                />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div v-on:submit.prevent="sendMessage" v-if="toUserName != null">
-      <form v-on:keyup.enter="sendMessage">
-      <textarea v-model="newMessage" type="text" placeholder="" />
-      <button>Odeslat žvanění</button>
-      </form>
     </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import UserSelector from "./UserSelector";
+import ChatUsers from "./ChatUsers";
+import ChatList from "./ChatList";
 import authHeader from "../service/DataService";
-import URLS from '../constants/urls'
+import URLS from "../constants/urls";
 
 export default {
   name: "Chat",
-  components: { UserSelector },
+  components: { ChatUsers, ChatList },
   data() {
     return {
       toUserName: null,
@@ -41,10 +71,6 @@ export default {
       this.toUserName = value;
       console.log(value);
       this.loadChatList();
-      this.setPeriodicLoad();
-    },
-    setPeriodicLoad() {
-      this.interval = setInterval(() => this.loadChatList(), 1000);
     },
     loadChatList() {
       axios
@@ -55,6 +81,9 @@ export default {
           if (res.status === 200) {
             this.chatList = res.data;
           }
+          if (res.status === 401) {
+              this.$router.push({ name: "Main" });
+            }
         });
     },
     sendMessage() {
@@ -71,7 +100,10 @@ export default {
             if (res.status === 200) {
               console.log("sended");
               this.newMessage = "";
-              loadChatList();
+              this.loadChatList();
+            }
+            if (res.status === 401) {
+              this.$router.push({ name: "Main" });
             }
           });
       }
@@ -81,39 +113,4 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.chat {
-  width: 50%;
-  margin: auto;
-  text-align: center;
-}
-.chat form {
-  padding: 20px 20px;
-}
-.chat textarea {
-  margin-bottom: 20px;
-  width: 100%;
-}
-::-webkit-input-placeholder {
-  text-align: center;
-}
-.chatlist {
-  margin: 20px;
-}
-.chatlist span{
-  display: block;
-    height: 30px;
-    width: 80%;
-    vertical-align: middle;
-    line-height: 30px;
-}
-.chatlist .left {
-  float: left;
-  margin: 2px 10px;
-  background-color: lightsteelblue;
-}
-.chatlist .right{
-  float: right;
-  margin: 2px 10px;
-  background-color: whitesmoke;
-}
 </style>

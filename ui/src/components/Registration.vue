@@ -1,12 +1,12 @@
 <template>
   <div class="registration">
-    <h2>Nějaká registrace</h2>
+    <h2>Registrace</h2>
     <form v-on:submit.prevent="submitRegistraion">
       <div>
       <input
         type="text"
         id="username"
-        placeholder="Jak na tebe hulákaj"
+        placeholder="Jméno žvanila"
         v-model="form.username"
       />
       </div>
@@ -14,13 +14,13 @@
       <input
         type="text"
         id="password"
-        placeholder="Doplň Heslo nebo 123"
+        placeholder="Heslo"
         v-model="form.password"
       />
       </div>
-      <button>Upiš se!</button>
+      <button>Potvrď žvanila</button>
     </form>
-    <router-link :to="{ name: 'Main' }">Ale tady jsem už byl.</router-link>
+    <router-link :to="{ name: 'Main' }">Zpět na přihlášení.</router-link>
   </div>
 </template>
 
@@ -46,6 +46,9 @@ export default {
           if (res.status === 200) {
             this.$router.push({ name: 'Main' })
           }
+          if (res.status === 401) {
+              this.$router.push({ name: "Main" });
+            }
         })
     }
   }

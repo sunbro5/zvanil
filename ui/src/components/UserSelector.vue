@@ -25,7 +25,7 @@
 import axios from "axios";
 import authHeader from "../service/DataService";
 import URLS from "../constants/urls";
-import AuthService from '../service/AuthService';
+import AuthService from "../service/AuthService";
 
 export default {
   name: "UserSelector",
@@ -47,11 +47,14 @@ export default {
             if (res.status === 200) {
               this.$emit("changed", res.data.username);
             }
+            if (res.status === 401) {
+              this.$router.push({ name: "Main" });
+            }
           })
           .catch((error) => {
             if (error.response.status === 404) {
               this.toUserName = "";
-              this.userSelectorText = "Nikdo takový neexistuje ! Zkus znovu.";
+              this.userSelectorText = "Žvanil nenalezen.";
             }
           });
       }
@@ -74,10 +77,10 @@ export default {
     },
     filterLoggedUsername(loadedUserList) {
       var userName = AuthService.userName();
-      if (!userName){
+      if (!userName) {
         return loadedUserList;
       }
-      return loadedUserList.filter(user => user.username !== userName);
+      return loadedUserList.filter((user) => user.username !== userName);
     },
   },
   mounted() {

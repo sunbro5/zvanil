@@ -13,8 +13,6 @@ public class WebSocketChatPusher {
 
     public void chatMessageAdded(ChatMessagePersisted message) {
         ChatMessageWS messageWS = ChatMessageWS.builder()
-                .toUserName(message.getToUserName())
-                .userName(message.getUserName())
                 .messageId(message.getId())
                 .type(ChatMessageEventType.ADDED)
                 .build();

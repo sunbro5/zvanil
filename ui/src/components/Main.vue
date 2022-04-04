@@ -1,12 +1,12 @@
 <template>
   <div class="main">
-    <h2>S kým budeme žvanit?</h2>
+    <h2>Přihlášení do žvanila.</h2>
     <form v-on:submit.prevent="login">
       <div>
         <input
           type="text"
           id="username"
-          placeholder="Jak na tebe hulákaj"
+          placeholder="Jméno"
           v-model="form.username"
         />
       </div>
@@ -14,7 +14,7 @@
         <input
           type="text"
           id="password"
-          placeholder="Tady napiš heslo"
+          placeholder="Heslo"
           v-model="form.password"
         />
       </div>
@@ -44,16 +44,23 @@ export default {
   methods: {
     isUserLogged() {
       const userName = AuthService.userName();
-      if (username) {
+      if (userName) {
         this.clientLogged = true;
         return;
       }
-      this.$router.push({ name: "Login" });
+      //this.$router.push({ name: "Chat" });
+    },
+    login(event) {
+      AuthService.login(this.form).then((data) => {
+        if (data.username) {
+          this.$router.push({ name: "Chat" });
+        }
+      });
     },
   },
-  created(){
+  created() {
     this.isUserLogged();
-  }
+  },
 };
 </script>
 

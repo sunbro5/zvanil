@@ -55,6 +55,9 @@ export default {
           if (res.status === 200) {
             this.chatList = res.data;
           }
+          if (res.status === 401) {
+              this.$router.push({ name: "Main" });
+            }
         });
     },
     sendMessage() {
@@ -72,6 +75,9 @@ export default {
               console.log("sended");
               this.newMessage = "";
               loadChatList();
+            }
+            if (res.status === 401) {
+              this.$router.push({ name: "Main" });
             }
           });
       }

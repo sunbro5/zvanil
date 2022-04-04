@@ -3,7 +3,6 @@ package cz.jm.coder.security;
 import cz.jm.coder.AbstractIntegrationTest;
 import cz.jm.coder.security.model.JwtResponse;
 import cz.jm.coder.security.model.UserLoginRequest;
-import cz.jm.coder.user.model.User;
 import cz.jm.coder.user.model.UserInfo;
 import cz.jm.coder.user.repository.UserPersisted;
 import org.junit.After;
@@ -11,10 +10,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.web.servlet.MvcResult;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.doReturn;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 

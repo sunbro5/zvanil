@@ -9,10 +9,12 @@ import cz.jm.coder.chat.websocket.WebSocketChatPusher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ChatService {
 
     @Autowired
@@ -34,20 +36,33 @@ public class ChatService {
         webSocketChatPusher.chatMessageAdded(messageSaved);
     }
 
-
     public List<ChatMessage> getUserChat(String withUsername) {
         String username = userFacade.getUserUsername();
         String chatKey = ChatHelper.getChatKey(username, withUsername);
         return chatRepository.getChatMessagesByKey(chatKey).stream()
-                .map(chatMessageMapper::chatMessagePersistedToChatMessage)
+                .map(chatMessagePersisted -> chatMessageMapper.chatMessagePersistedToChatMessage(
+                        chatMessagePersisted,
+                        isAuthor(chatMessagePersisted, username)))
                 .collect(Collectors.toList());
     }
 
     public ChatMessage getChatById(int id) {
         String username = userFacade.getUserUsername();
         return chatRepository.findById(id)
-                .map(chatMessageMapper::chatMessagePersistedToChatMessage)
+                .map(chatMessagePersisted -> chatMessageMapper.chatMessagePersistedToChatMessage(
+                        chatMessagePersisted,
+                        isAuthor(chatMessagePersisted, username)
+                ))
                 .filter(message -> ChatHelper.userInConversation(message.getKey(), username))
                 .orElse(null);
     }
+
+    public void removeAll(){
+        chatRepository.deleteAll();
+    }
+
+    private boolean isAuthor(ChatMessagePersisted chatMessagePersisted, String userName) {
+        return chatMessagePersisted.getUserName().equals(userName);
+    }
+
 }
