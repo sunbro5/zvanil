@@ -32,4 +32,8 @@ public class UserService {
                 .map(user -> new UserInfo(user.getUsername()))
                 .collect(Collectors.toList());
     }
+
+    public void removeUser(String id){
+        userRepository.deleteById(id);
+    }
 }
