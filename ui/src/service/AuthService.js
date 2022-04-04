@@ -17,14 +17,6 @@ class AuthService {
       });
   }
 
-  callPost(){
-
-  }
-
-  callGet(){
-    
-  }
-
   logout() {
     localStorage.removeItem('userAuth');
     localStorage.removeItem('username');
