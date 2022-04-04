@@ -209,7 +209,7 @@
                         </goals>
                         <phase>generate-resources</phase>
                         <configuration>
-                            <arguments>run build --production</arguments>
+                            <arguments>run --production=false build</arguments>
                         </configuration>
                     </execution>
                 </executions>
