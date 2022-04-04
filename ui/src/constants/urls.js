@@ -8,7 +8,7 @@ const API_AUTH = URL + "/api/auth"
 const API_USER_ALL = URL + "/api/user/all"
 
 export default {
-  URL : URL,
+  URL : PROD_URL,
   API_USER : API_USER,
   API_CHAT : API_CHAT,
   API_REGISTRATION : API_REGISTRATION,
