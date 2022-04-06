@@ -4,6 +4,7 @@ import cz.jm.coder.chat.model.ChatHelper;
 import cz.jm.coder.chat.model.ChatMessage;
 import cz.jm.coder.chat.repository.ChatMessagePersisted;
 import cz.jm.coder.chat.repository.ChatRepository;
+import cz.jm.coder.exception.UnauthorizedOperationException;
 import cz.jm.coder.security.LoggedUserFacade;
 import cz.jm.coder.chat.websocket.WebSocketChatPusher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,16 +50,23 @@ public class ChatService {
 
     public ChatMessage getChatById(int id) {
         String username = userFacade.getUserUsername();
-        return chatRepository.findById(id)
+        Optional<ChatMessage> chatMessage = chatRepository.findById(id)
                 .map(chatMessagePersisted -> chatMessageMapper.chatMessagePersistedToChatMessage(
                         chatMessagePersisted,
                         isAuthor(chatMessagePersisted, username)
                 ))
-                .filter(message -> ChatHelper.userInConversation(message.getKey(), username))
-                .orElse(null);
+                .filter(message -> ChatHelper.userInConversation(message.getKey(), username));
+        chatMessage.ifPresent(message -> checkIsMessageWithUser(message, username));
+        return chatMessage.orElse(null);
     }
 
-    public void removeAll(){
+    private void checkIsMessageWithUser(ChatMessage message, String username) {
+        if (ChatHelper.getChatUsers(message.getKey()).stream().noneMatch(username::equals)) {
+            throw new UnauthorizedOperationException("Message is not users.");
+        }
+    }
+
+    public void removeAll() {
         chatRepository.deleteAll();
     }
 

@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ChatHelper {
@@ -21,6 +23,10 @@ public class ChatHelper {
         } else {
             return toUsername + USER_DIVIDER + username;
         }
+    }
+
+    public static List<String> getChatUsers(String chatKey){
+        return Arrays.asList(chatKey.split(USER_DIVIDER));
     }
 
     public static boolean userInConversation(String chatKey, String username){

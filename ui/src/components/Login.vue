@@ -8,13 +8,15 @@
         <span v-if="message.userName == toUserName" class="right"
           >{{ message.userName }}: {{ message.message }}</span
         >
-        <span v-else class="left">{{ message.userName }} : {{ message.message }}</span>
+        <span v-else class="left"
+          >{{ message.userName }} : {{ message.message }}</span
+        >
       </div>
     </div>
     <div v-on:submit.prevent="sendMessage" v-if="toUserName != null">
       <form v-on:keyup.enter="sendMessage">
-      <textarea v-model="newMessage" type="text" placeholder="" />
-      <button>Odeslat žvanění</button>
+        <textarea v-model="newMessage" type="text" placeholder="" />
+        <button>Odeslat žvanění</button>
       </form>
     </div>
   </div>
@@ -24,7 +26,7 @@
 import axios from "axios";
 import UserSelector from "./UserSelector";
 import authHeader from "../service/DataService";
-import URLS from '../constants/urls'
+import URLS from "../constants/urls";
 
 export default {
   name: "Chat",
@@ -55,9 +57,11 @@ export default {
           if (res.status === 200) {
             this.chatList = res.data;
           }
-          if (res.status === 401) {
-              this.$router.push({ name: "Main" });
-            }
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            this.$router.push({ name: "Main" });
+          }
         });
     },
     sendMessage() {
@@ -76,7 +80,9 @@ export default {
               this.newMessage = "";
               loadChatList();
             }
-            if (res.status === 401) {
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
               this.$router.push({ name: "Main" });
             }
           });
@@ -105,19 +111,19 @@ export default {
 .chatlist {
   margin: 20px;
 }
-.chatlist span{
+.chatlist span {
   display: block;
-    height: 30px;
-    width: 80%;
-    vertical-align: middle;
-    line-height: 30px;
+  height: 30px;
+  width: 80%;
+  vertical-align: middle;
+  line-height: 30px;
 }
 .chatlist .left {
   float: left;
   margin: 2px 10px;
   background-color: lightsteelblue;
 }
-.chatlist .right{
+.chatlist .right {
   float: right;
   margin: 2px 10px;
   background-color: whitesmoke;

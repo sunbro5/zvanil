@@ -47,14 +47,14 @@ export default {
             if (res.status === 200) {
               this.$emit("changed", res.data.username);
             }
-            if (res.status === 401) {
-              this.$router.push({ name: "Main" });
-            }
           })
           .catch((error) => {
             if (error.response.status === 404) {
               this.toUserName = "";
               this.userSelectorText = "Žvanil nenalezen.";
+            }
+            if (res.status === 401) {
+              this.$router.push({ name: "Main" });
             }
           });
       }

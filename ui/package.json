@@ -13,9 +13,13 @@
   "dependencies": {
     "axios": "^0.21.1",
     "build": "^0.1.4",
+    "prop-types": "^15.8.1",
+    "react": "^18.0.0",
+    "react-stomp": "^5.1.0",
     "schema-utils": "^3.1.1",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "webstomp-client": "^1.2.6"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

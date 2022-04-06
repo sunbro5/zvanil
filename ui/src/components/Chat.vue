@@ -13,14 +13,11 @@
                     data-toggle="modal"
                     data-target="#view_info"
                   >
-                    <img
-                      src="@/assets/avatar.png"
-                      alt="avatar"
-                    />
+                    <img src="@/assets/avatar.png" alt="avatar" />
                   </a>
                   <div v-if="toUserName != null" class="chat-about">
                     <h6 class="m-b-0">{{ toUserName }}</h6>
-                    <small style="display:none">Last seen: 2 hours ago</small>
+                    <small style="display: none">Last seen: 2 hours ago</small>
                   </div>
                 </div>
               </div>
@@ -55,6 +52,8 @@ import ChatUsers from "./ChatUsers";
 import ChatList from "./ChatList";
 import authHeader from "../service/DataService";
 import URLS from "../constants/urls";
+import SockJS from "sockjs-client";
+import Stomp from "webstomp-client";
 
 export default {
   name: "Chat",
@@ -81,9 +80,11 @@ export default {
           if (res.status === 200) {
             this.chatList = res.data;
           }
-          if (res.status === 401) {
-              this.$router.push({ name: "Main" });
-            }
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            this.$router.push({ name: "Main" });
+          }
         });
     },
     sendMessage() {
@@ -100,14 +101,56 @@ export default {
             if (res.status === 200) {
               console.log("sended");
               this.newMessage = "";
-              this.loadChatList();
             }
-            if (res.status === 401) {
+          })
+          .catch((error) => {
+            if (error.response.status === 401) {
               this.$router.push({ name: "Main" });
             }
           });
       }
     },
+    connect() {
+      this.socket = new SockJS(URLS.API_WS);
+      this.stompClient = Stomp.over(this.socket);
+      this.stompClient.connect(
+        {},
+        (frame) => {
+          this.connected = true;
+          console.log(frame);
+          this.stompClient.subscribe("/topic/chat/jan-a", (msg) => {
+            this.onMessage(msg);
+          });
+        },
+        (error) => {
+          console.log(error);
+          this.connected = false;
+        }
+      );
+    },
+    onMessage(msg) {
+      var messageId = JSON.parse(msg.body).messageId;
+      this.loadNewMessage(messageId);
+    },
+    loadNewMessage(messageId){
+      axios
+        .get(URLS.API_CHAT + "/" + messageId, {
+          headers: authHeader(),
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            this.chatList.push(res.data);
+          }
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            this.$router.push({ name: "Main" });
+          }
+        });
+    }
+  },
+  created() {
+    this.connect();
   },
 };
 </script>
