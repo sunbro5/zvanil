@@ -8,7 +8,7 @@
       >
         <div v-if="message.author">
           <div class="message-data text-right">
-            <!--<span class="message-data-time">10:10 AM, Today</span>-->
+            <span>{{ message.userName }}</span>
             <img src="@/assets/avatar.png" alt="avatar" />
           </div>
           <div class="message my-message float-right">
@@ -17,7 +17,7 @@
         </div>
         <div v-else>
           <div class="message-data text-left">
-            <!--<span class="message-data-time">10:10 AM, Today</span>-->
+            <span>{{ message.userName }}</span>
             <img src="@/assets/avatar.png" alt="avatar" />
           </div>
           <div class="message other-message float-left">
@@ -39,6 +39,7 @@ export default {
   name: "ChatUsers",
   data() {
     return {
+      messageShiftLeft: true,
     };
   },
   props: {

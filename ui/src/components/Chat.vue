@@ -61,15 +61,18 @@ export default {
   data() {
     return {
       toUserName: null,
+      chatKey: null,
       chatList: [],
       newMessage: "",
     };
   },
   methods: {
     toUserNameFilled(value) {
+      this.disconnectWS();
       this.toUserName = value;
-      console.log(value);
       this.loadChatList();
+      this.loadChatKey();
+      this.connectWS();
     },
     loadChatList() {
       axios
@@ -79,6 +82,22 @@ export default {
         .then((res) => {
           if (res.status === 200) {
             this.chatList = res.data;
+          }
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            this.$router.push({ name: "Main" });
+          }
+        });
+    },
+    loadChatKey() {
+      axios
+        .get(URLS.API_CHAT_KEY + "?withUsername=" + this.toUserName, {
+          headers: authHeader(),
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            this.chatKey = res.data;
           }
         })
         .catch((error) => {
@@ -110,7 +129,8 @@ export default {
           });
       }
     },
-    connect() {
+
+    connectWS() {
       this.socket = new SockJS(URLS.API_WS);
       this.stompClient = Stomp.over(this.socket);
       this.stompClient.connect(
@@ -118,7 +138,7 @@ export default {
         (frame) => {
           this.connected = true;
           console.log(frame);
-          this.stompClient.subscribe("/topic/chat/jan-a", (msg) => {
+          this.stompClient.subscribe("/topic/chat/" + this.chatKey, (msg) => {
             this.onMessage(msg);
           });
         },
@@ -128,10 +148,19 @@ export default {
         }
       );
     },
+
+    disconnectWS(){
+      if (this.stompClient) {
+        this.stompClient.disconnect();
+      }
+      this.connected = false;
+    },
+
     onMessage(msg) {
       var messageId = JSON.parse(msg.body).messageId;
       this.loadNewMessage(messageId);
     },
+
     loadNewMessage(messageId){
       axios
         .get(URLS.API_CHAT + "/" + messageId, {
@@ -148,10 +177,7 @@ export default {
           }
         });
     }
-  },
-  created() {
-    this.connect();
-  },
+  }
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

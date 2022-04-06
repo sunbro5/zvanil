@@ -31,4 +31,9 @@ public class ChatController {
         return chatService.getUserChat(withUsername);
     }
 
+    @GetMapping("/key")
+    public String getUserChatKey(@RequestParam String withUsername) {
+        return chatService.getUserChatKey(withUsername);
+    }
+
 }

@@ -48,6 +48,11 @@ public class ChatService {
                 .collect(Collectors.toList());
     }
 
+    public String getUserChatKey(String withUsername) {
+        String username = userFacade.getUserUsername();
+        return ChatHelper.getChatKey(username, withUsername);
+    }
+
     public ChatMessage getChatById(int id) {
         String username = userFacade.getUserUsername();
         Optional<ChatMessage> chatMessage = chatRepository.findById(id)
