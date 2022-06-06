@@ -1,3 +1,5 @@
+Running on https://zvanil.herokuapp.com
+
 POSTGRESS
 
 docker run --name pqadmin -p 8085:8085 -e PGADMIN_DEFAULT_EMAIL=test@gmail.com -e PGADMIN_DEFAULT_PASSWORD=pass -e PGADMIN_LISTEN_PORT=8085  -d dpage/pgadmin4
