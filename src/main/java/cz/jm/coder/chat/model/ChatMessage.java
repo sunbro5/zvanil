@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 public class ChatMessage {
 
-    private int id;
+    private String id;
     private String key;
     private String userName;
     @NotEmpty

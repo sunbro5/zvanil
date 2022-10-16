@@ -6,6 +6,6 @@ import lombok.Value;
 @Value
 @Builder
 public class ChatMessageWS {
-    int messageId;
+    String messageId;
     ChatMessageEventType type;
 }

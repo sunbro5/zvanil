@@ -8,6 +8,9 @@ import cz.jm.coder.user.repository.UserRepository;
 import org.junit.ClassRule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -15,24 +18,31 @@ import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.support.TestPropertySourceUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.utility.DockerImageName;
 
 import java.io.IOException;
 import java.util.List;
 
+import static java.lang.String.format;
+
+@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@RunWith(SpringRunner.class)
-@ContextConfiguration
+@TestPropertySource(properties =
+        "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration")
+@ContextConfiguration(initializers = AbstractIntegrationTest.Initializer.class)
 public abstract class AbstractIntegrationTest {
 
     @ClassRule
-    public static PostgreSQLContainer postgreSQLContainer = PostgressContainer.getInstance();
+    public static TestMongoDBContainer mongoDBContainer = TestMongoDBContainer.getInstance();
 
     @Autowired
     protected MockMvc mockMvc;
@@ -49,12 +59,12 @@ public abstract class AbstractIntegrationTest {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+
+        @Override
         public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-            TestPropertyValues.of(
-                    "spring.datasource.url=" + postgreSQLContainer.getJdbcUrl(),
-                    "spring.datasource.username=" + postgreSQLContainer.getUsername(),
-                    "spring.datasource.password=" + postgreSQLContainer.getPassword()
-            ).applyTo(configurableApplicationContext.getEnvironment());
+
+            TestPropertySourceUtils.addInlinedPropertiesToEnvironment(configurableApplicationContext,
+                    format("spring.data.mongodb.uri=mongodb://%s:%s",mongoDBContainer.getContainerIpAddress(), mongoDBContainer.getMappedPort(27017)));
         }
     }
 

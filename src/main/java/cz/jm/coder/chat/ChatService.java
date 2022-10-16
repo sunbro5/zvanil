@@ -10,13 +10,11 @@ import cz.jm.coder.chat.websocket.WebSocketChatPusher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class ChatService {
 
     @Autowired
@@ -53,7 +51,7 @@ public class ChatService {
         return ChatHelper.getChatKey(username, withUsername);
     }
 
-    public ChatMessage getChatById(int id) {
+    public ChatMessage getChatById(String id) {
         String username = userFacade.getUserUsername();
         Optional<ChatMessage> chatMessage = chatRepository.findById(id)
                 .map(chatMessagePersisted -> chatMessageMapper.chatMessagePersistedToChatMessage(

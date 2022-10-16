@@ -22,7 +22,7 @@ public class ChatController {
     }
 
     @GetMapping("/{id}")
-    public ChatMessage getMessage(@PathVariable int id) {
+    public ChatMessage getMessage(@PathVariable String id) {
         return chatService.getChatById(id);
     }
 
