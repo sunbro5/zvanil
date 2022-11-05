@@ -11,7 +11,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "build": "^0.1.4",
     "prop-types": "^15.8.1",
     "react": "^18.0.0",
