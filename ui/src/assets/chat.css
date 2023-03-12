@@ -1,3 +1,35 @@
+:root {
+    /* Change this to change the appearance of the hexaons */
+    --hex-width: 100px; 
+    --hex-between: 10px;
+    
+    /* Other hexagon dimentions */
+    --hex-height: calc(var(--hex-width) / 1.73 /* sqrt(3) */);
+    --hex-margin: calc(var(--hex-width) / 2);
+    --hex-border: calc(var(--hex-margin) / 1.73 /* sqrt(3) */);
+    --hex-transition: all .2s ease;
+    
+    /* Colors */
+    --color-hex-default: #000000;
+    --color-hex-hover:   #FFFFFF;
+    --color-angular:     #DD0031;
+    --color-atom:        #66595C;
+    --color-bootstrap:   #563D7C;
+    --color-circleci:    #343434;
+    --color-css:         #1572B6;
+    --color-git:         #F14E32;
+    --color-gulp:        #DA4648;
+    --color-haskell:     #5D4F85;
+    --color-html:        #E34F26;
+    --color-javascript:  #F7DF1E;
+    --color-meteor:      #DE4F4F;
+    --color-python:      #3776AB;
+    --color-rails:       #CC0000;
+    --color-sass:        #CC6699;
+    --color-vuejs:       #4FC08D;
+    --color-webpack:     #8DD6F9;
+  }
+  
 body{
     background-color: #f4f7f6;
     margin-top:20px;

@@ -3,21 +3,18 @@ package cz.jm.coder.user;
 import cz.jm.coder.AbstractIntegrationTest;
 import cz.jm.coder.user.model.User;
 import cz.jm.coder.user.repository.UserPersisted;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 public class RegistrationControllerTest extends AbstractIntegrationTest {
 
-    @After
+    @AfterEach
     public void after(){
         userRepository.deleteAll();
     }

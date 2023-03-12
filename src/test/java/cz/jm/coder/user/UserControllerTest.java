@@ -1,28 +1,22 @@
 package cz.jm.coder.user;
 
 import cz.jm.coder.AbstractIntegrationTest;
-import cz.jm.coder.user.model.User;
 import cz.jm.coder.user.model.UserInfo;
 import cz.jm.coder.user.repository.UserPersisted;
-import org.junit.After;
-import org.junit.Test;
-import org.springframework.http.MediaType;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.security.test.context.support.WithMockUser;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 public class UserControllerTest extends AbstractIntegrationTest {
 
     private static String TEST_USER = "anotherUser";
 
-    @After
+    @AfterEach
     public void after(){
         userRepository.deleteAll();
     }

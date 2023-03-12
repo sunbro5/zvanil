@@ -4,7 +4,7 @@ import cz.jm.coder.AbstractIntegrationTest;
 import cz.jm.coder.chat.model.ChatHelper;
 import cz.jm.coder.chat.model.ChatMessage;
 import cz.jm.coder.chat.repository.ChatMessagePersisted;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;

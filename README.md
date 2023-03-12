@@ -29,3 +29,5 @@ docker network create --driver overlay --subnet 10.0.0.0/12 --opt encrypted serv
 docker service create --replicas 2 --name postgres --network mynetwork -e POSTGRES_PASSWORD=pass694 postgres
 
 docker service create --replicas 1 --name coder --publish published=8081,target=8081 -e DATABASE_URL=mongodb://mongo:27017 marjan/coder-1.0
+
+docker run --name coder -p 8081:8081 -p 443:443 -p 80:80 -e DATABASE_URL=mongodb://172.17.0.2:27017 marjan/coder-1.0

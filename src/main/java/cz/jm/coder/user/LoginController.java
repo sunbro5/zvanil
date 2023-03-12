@@ -5,6 +5,7 @@ import cz.jm.coder.security.model.UserLoginAuth;
 import cz.jm.coder.security.model.UserLoginRequest;
 import cz.jm.coder.security.utils.JwtUtils;
 import cz.jm.coder.user.repository.UserRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")

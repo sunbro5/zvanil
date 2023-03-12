@@ -5,8 +5,8 @@ import cz.jm.coder.security.model.JwtResponse;
 import cz.jm.coder.security.model.UserLoginRequest;
 import cz.jm.coder.user.model.UserInfo;
 import cz.jm.coder.user.repository.UserPersisted;
-import org.junit.After;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +22,7 @@ public class LoginControllerTest extends AbstractIntegrationTest {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @After
+    @AfterEach
     public void after(){
         userRepository.deleteAll();
     }
